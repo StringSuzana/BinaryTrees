@@ -20,7 +20,7 @@ namespace BinaryTreeBasics
             TreeNode k = new TreeNode("k");
             TreeNode l = new TreeNode("l");
             TreeNode m = new TreeNode("m");
-            TreeNode n = new TreeNode("n");            
+            TreeNode n = new TreeNode("n");
             TreeNode o = new TreeNode("o");
             TreeNode p = new TreeNode("p");
             TreeNode r = new TreeNode("r");
@@ -35,14 +35,14 @@ namespace BinaryTreeBasics
             tree.insert(d);
             tree.insert(e);
             tree.insert(f);
-            tree.insert(g);            
+            tree.insert(g);
             tree.insert(h);
             tree.insert(i);
             tree.insert(j);
             tree.insert(k);
             tree.insert(l);
             tree.insert(m);
-            tree.insert(n);            
+            tree.insert(n);
             tree.insert(o);
             tree.insert(p);
             tree.insert(r);
@@ -51,8 +51,10 @@ namespace BinaryTreeBasics
             tree.insert(u);
             tree.insert(v);
 
-            // tree.print_depth_first_search();
-            Console.WriteLine(tree.print_depth_first_search_recursive(tree.Root)); 
+
+            Console.WriteLine($"Depth firs iteratively: {tree.print_depth_first_search()}");
+            Console.WriteLine($"Depth first search recursively: {tree.depth_first_search_recursive(tree.Root)}");
+            Console.WriteLine( $"Breadth first search: {tree.breadth_first_search(tree.Root)}"); 
         }
 
     }
@@ -70,8 +72,10 @@ namespace BinaryTreeBasics
                 Root.insert_child(node);
             }
         }
-        public void print_depth_first_search()
+        public string print_depth_first_search()
         {
+            string result = string.Empty;
+
             Stack<TreeNode> traverse_stack = new Stack<TreeNode>();
             if (Root != null)
                 traverse_stack.Push(this.Root);
@@ -80,16 +84,17 @@ namespace BinaryTreeBasics
             {
                 /**2.Pop, make it current**/
                 var current = traverse_stack.Pop();
-                Console.WriteLine(current.Data);
+                result += current.Data;
                 /**3.Any children?**/
                 if (current.RightNode != null)
                     traverse_stack.Push(current.RightNode);
                 if (current.LeftNode != null)
                     traverse_stack.Push(current.LeftNode);
-            }
 
+            }
+            return result;
         }
-        public string print_depth_first_search_recursive(TreeNode node)
+        public string depth_first_search_recursive(TreeNode node)
         {
             string right = "";
             string left = "";
@@ -97,17 +102,39 @@ namespace BinaryTreeBasics
 
             if (node.RightNode != null)
             {
-                right = print_depth_first_search_recursive(node.RightNode);
-                Console.WriteLine("right: "+ right);
+                right = depth_first_search_recursive(node.RightNode);
+                //Console.WriteLine("right: " + right);
             }
             if (node.LeftNode != null)
             {
-                left = print_depth_first_search_recursive(node.LeftNode);
-                Console.WriteLine("left: " + left);
+                left = depth_first_search_recursive(node.LeftNode);
+                //Console.WriteLine("left: " + left);
             }
 
             return node.Data + left + right;
 
+        }
+        public string breadth_first_search(TreeNode root)
+        {
+            string result = string.Empty;
+
+            /**CAN NOT BE RECURSIVE**/
+            if (root == null)
+                return string.Empty;
+            var traverse_queue = new Queue<TreeNode>();
+            traverse_queue.Enqueue(root);
+            while (traverse_queue.Count > 0)
+            {
+                var current = traverse_queue.Dequeue();
+                result += current.Data;
+                /**Traversing from left to right**/
+                if (current.LeftNode != null)
+                    traverse_queue.Enqueue(current.LeftNode);
+                if (current.RightNode != null)
+                    traverse_queue.Enqueue(current.RightNode);
+            }
+
+            return result;
         }
     }
     public class TreeNode
