@@ -13,6 +13,21 @@ namespace BinaryTreeBasics
             TreeNode d = new TreeNode("d");
             TreeNode e = new TreeNode("e");
             TreeNode f = new TreeNode("f");
+            TreeNode g = new TreeNode("g");
+            TreeNode h = new TreeNode("h");
+            TreeNode i = new TreeNode("i");
+            TreeNode j = new TreeNode("j");
+            TreeNode k = new TreeNode("k");
+            TreeNode l = new TreeNode("l");
+            TreeNode m = new TreeNode("m");
+            TreeNode n = new TreeNode("n");            
+            TreeNode o = new TreeNode("o");
+            TreeNode p = new TreeNode("p");
+            TreeNode r = new TreeNode("r");
+            TreeNode s = new TreeNode("s");
+            TreeNode t = new TreeNode("t");
+            TreeNode u = new TreeNode("u");
+            TreeNode v = new TreeNode("v");
             BinaryTree tree = new BinaryTree();
             tree.insert(a);
             tree.insert(b);
@@ -20,8 +35,24 @@ namespace BinaryTreeBasics
             tree.insert(d);
             tree.insert(e);
             tree.insert(f);
+            tree.insert(g);            
+            tree.insert(h);
+            tree.insert(i);
+            tree.insert(j);
+            tree.insert(k);
+            tree.insert(l);
+            tree.insert(m);
+            tree.insert(n);            
+            tree.insert(o);
+            tree.insert(p);
+            tree.insert(r);
+            tree.insert(s);
+            tree.insert(t);
+            tree.insert(u);
+            tree.insert(v);
 
-            tree.print_depth_first_search();
+            // tree.print_depth_first_search();
+            Console.WriteLine(tree.print_depth_first_search_recursive(tree.Root)); 
         }
 
     }
@@ -56,6 +87,26 @@ namespace BinaryTreeBasics
                 if (current.LeftNode != null)
                     traverse_stack.Push(current.LeftNode);
             }
+
+        }
+        public string print_depth_first_search_recursive(TreeNode node)
+        {
+            string right = "";
+            string left = "";
+            if (node == null) return "Empty";
+
+            if (node.RightNode != null)
+            {
+                right = print_depth_first_search_recursive(node.RightNode);
+                Console.WriteLine("right: "+ right);
+            }
+            if (node.LeftNode != null)
+            {
+                left = print_depth_first_search_recursive(node.LeftNode);
+                Console.WriteLine("left: " + left);
+            }
+
+            return node.Data + left + right;
 
         }
     }
