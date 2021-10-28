@@ -69,6 +69,7 @@ namespace BinaryTreeBasics
             }
             else
             {
+                Console.WriteLine(Root.Data);
                 Root.insert_child(node);
             }
         }
@@ -148,26 +149,34 @@ namespace BinaryTreeBasics
         }
         public void insert_child(TreeNode node)
         {
+           // Console.WriteLine(Data);
             if (LeftNode == null)
                 LeftNode = node;
             else if (RightNode == null)
                 RightNode = node;
 
-            /**I want to fill my tree from left to right on a level.
-             * So thet no node can go deeper than one level more than sibling node
-             *          o
-             *         / \ 
-             *        o   o
-             *       / \
-             *      o   o   <-------this far this is ok
-             *     / \
-             *    o   o     <-------this is forbidden
-             *    
+            /**I want to fill my tree from left to right:.
+             *              a
+             *             / \ 
+             *            b   c
+             *           / \   |\
+             *          d   e  f g
+             *         /\   |\
+             *        h  i  j k
+             *       /\  /\
+             *      l  m n o
+             *     /|  |\
+             *    p r  s t
+             *   / \
+             *  u   v
+             *  
              * **/
             else if (LeftNode.RightNode == null | LeftNode.LeftNode == null)
                 LeftNode.insert_child(node);
-            else if (RightNode != null)
+            else if (RightNode.RightNode == null | RightNode.LeftNode == null)
                 RightNode.insert_child(node);
+            else
+                LeftNode.insert_child(node);
         }
 
     }
