@@ -54,7 +54,7 @@ namespace BinaryTreeBasics
 
             Console.WriteLine($"Depth firs iteratively: {tree.print_depth_first_search()}");
             Console.WriteLine($"Depth first search recursively: {tree.depth_first_search_recursive(tree.Root)}");
-            Console.WriteLine( $"Breadth first search: {tree.breadth_first_search(tree.Root)}"); 
+            Console.WriteLine($"Breadth first search: {tree.breadth_first_search(tree.Root)}");
         }
 
     }
@@ -69,7 +69,6 @@ namespace BinaryTreeBasics
             }
             else
             {
-                Console.WriteLine(Root.Data);
                 Root.insert_child(node);
             }
         }
@@ -137,6 +136,7 @@ namespace BinaryTreeBasics
 
             return result;
         }
+       
     }
     public class TreeNode
     {
@@ -147,15 +147,56 @@ namespace BinaryTreeBasics
         {
             this.Data = data_value;
         }
+        public TreeNode find_first_without_child(TreeNode root)
+        {
+            if (root == null)
+                return null;
+            var traverse_queue = new Queue<TreeNode>();
+            traverse_queue.Enqueue(root);
+            TreeNode current = null;
+            while (traverse_queue.Count > 0)
+            {
+                current = traverse_queue.Dequeue();
+                /**Traversing from left to right**/
+                if (current.LeftNode == null | current.RightNode == null)
+                    return current;
+                //if it is not returned=> fill the queue
+                if (current.LeftNode != null)
+                    traverse_queue.Enqueue(current.LeftNode);
+                if (current.RightNode != null)
+                    traverse_queue.Enqueue(current.RightNode);
+            }
+            return current;
+
+        }
         public void insert_child(TreeNode node)
         {
-           // Console.WriteLine(Data);
+            // Console.WriteLine(Data);
             if (LeftNode == null)
                 LeftNode = node;
             else if (RightNode == null)
                 RightNode = node;
+            else
+                find_first_without_child(this).insert_child(node); /**I want to fill all levels first**/
+            /***find_first_without_child
+             * 
+             *              a
+             *           /     \ 
+             *          b       c
+             *         / \     / \
+             *        d   e   f    g
+             *      / |   |\  |\   |\
+             *     h  i   j k l m  n o
+             *    /|  |\  |\
+             *   p r  s t u v
+             * 
+             * ***/
 
-            /**I want to fill my tree from left to right:.
+
+
+
+            /** SECOND IDEA:
+             * I want to fill my tree from left to right like a waterfall:
              *              a
              *             / \ 
              *            b   c
@@ -170,13 +211,17 @@ namespace BinaryTreeBasics
              *   / \
              *  u   v
              *  
-             * **/
-            else if (LeftNode.RightNode == null | LeftNode.LeftNode == null)
-                LeftNode.insert_child(node);
-            else if (RightNode.RightNode == null | RightNode.LeftNode == null)
-                RightNode.insert_child(node);
-            else
-                LeftNode.insert_child(node);
+             *
+             * else if (LeftNode.RightNode == null | LeftNode.LeftNode == null)
+             *     LeftNode.insert_child(node);
+             * else if (RightNode.RightNode == null | RightNode.LeftNode == null)
+             *     RightNode.insert_child(node);
+             * else
+             *     LeftNode.insert_child(node); 
+            **/
+
+
+
         }
 
     }
