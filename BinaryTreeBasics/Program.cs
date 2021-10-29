@@ -55,6 +55,7 @@ namespace BinaryTreeBasics
             Console.WriteLine($"Depth firs iteratively: {tree.print_depth_first_search()}");
             Console.WriteLine($"Depth first search recursively: {tree.depth_first_search_recursive(tree.Root)}");
             Console.WriteLine($"Breadth first search: {tree.breadth_first_search(tree.Root)}");
+            Console.WriteLine($"Does tree includes letter p? {tree.tree_includes(tree.Root, "p")}");
         }
 
     }
@@ -136,7 +137,21 @@ namespace BinaryTreeBasics
 
             return result;
         }
-       
+        public bool tree_includes(TreeNode root, string searched_value)
+        {
+            /**Recursively - depth first**/
+            Console.WriteLine(root?.Data);
+            if (root == null) return false;
+            if (root.Data == searched_value) return true;
+            return tree_includes(root.LeftNode, searched_value) | tree_includes(root.RightNode, searched_value);
+
+            /** version with not immidiately assigning false value to null nodes
+            var left = root.LeftNode == null ? false : tree_includes(root.LeftNode, searched_value);
+            var right = root.RightNode == null ? false : tree_includes(root.RightNode, searched_value);
+            return left | right;
+            **/
+        }
+
     }
     public class TreeNode
     {
